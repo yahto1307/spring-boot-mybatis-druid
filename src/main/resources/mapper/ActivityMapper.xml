@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yahto.hydra.dao.ActivityDao">
     <resultMap id="BaseResultMap" type="com.yahto.hydra.model.Activity">
-        <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="create_at" jdbcType="TIMESTAMP" property="createAt"/>
-        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt"/>
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="create_at" property="createAt" jdbcType="TIMESTAMP"/>
+        <result column="update_at" property="updateAt" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <insert id="insertSelective" parameterType="com.yahto.hydra.model.Activity"
-            useGeneratedKeys="true" keyColumn="id">
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+            parameterType="com.yahto.hydra.model.Activity">
         insert into tb_activity
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">
@@ -23,13 +23,13 @@
         </trim>
         <trim prefix="values(" suffix=")" suffixOverrides=",">
             <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
+                #{name,jdbcType=VARCHAR},
             </if>
             <if test="createAt != null">
-                create_at = #{createAt,jdbcType=TIMESTAMP},
+                #{createAt,jdbcType=TIMESTAMP},
             </if>
             <if test="updateAt != null">
-                update_at = #{updateAt,jdbcType=TIMESTAMP},
+                #{updateAt,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>

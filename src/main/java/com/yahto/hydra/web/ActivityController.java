@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * Created by yahto on 2019-05-28 11:29
  *
@@ -18,12 +20,13 @@ public class ActivityController {
     private ActivityDao activityDao;
 
     @GetMapping
-    @ResponseBody
-    public String create() {
+    public Activity create() {
         Activity activity = Activity.builder()
+                .createAt(new Date())
+                .updateAt(new Date())
                 .name("hail hydra")
                 .build();
         activityDao.insertSelective(activity);
-        return activity.toString();
+        return activity;
     }
 }

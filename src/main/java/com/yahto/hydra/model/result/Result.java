@@ -1,9 +1,9 @@
 package com.yahto.hydra.model.result;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.collect.Maps;
 import org.joda.time.DateTime;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -11,7 +11,6 @@ import java.util.Map;
  *
  * @author yahto
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Result {
     private Meta meta;
     private Map<String, Object> data = Maps.newHashMap();
@@ -55,17 +54,17 @@ public class Result {
 
         private boolean success;
         private String message;
-        private DateTime timestamp;
+        private Date timestamp;
 
         public Meta(boolean success) {
             this.success = success;
-            this.timestamp = DateTime.now();
+            this.timestamp = DateTime.now().toDate();
         }
 
         Meta(boolean success, String message) {
             this.success = success;
             this.message = message;
-            this.timestamp = DateTime.now();
+            this.timestamp = DateTime.now().toDate();
         }
 
         public boolean isSuccess() {
@@ -76,7 +75,7 @@ public class Result {
             return message;
         }
 
-        public DateTime getTimestamp() {
+        public Date getTimestamp() {
             return timestamp;
         }
     }

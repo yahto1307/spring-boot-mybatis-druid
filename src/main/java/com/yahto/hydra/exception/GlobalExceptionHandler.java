@@ -1,6 +1,6 @@
 package com.yahto.hydra.exception;
 
-import com.yahto.hydra.kill.everything.model.result.Result;
+import com.yahto.hydra.model.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,18 +24,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Result> baseExceptionHandler(HttpServletRequest req, Exception e) {
         log.error("---BaseException Handler---Host:{} invokes url:{} ERROR:{} cause:{}",
                 req.getRemoteHost(), req.getRequestURL(), e.getMessage(), e.getCause());
-        Result result = new Result();
+        Result result = new Result().fail("internal error");
         if (e instanceof DataBaseException) {
             result.fail(((DataBaseException) e).getMsg());
         }
         return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<Result> exception(HttpServletRequest req, Exception e) {
-        log.error("---BaseException Handler---Host:{} invokes url:{} ERROR:{} cause:{}",
-                req.getRemoteHost(), req.getRequestURL(), e.getMessage(), e.getCause());
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler(value = Throwable.class)
+//    public ResponseEntity<Result> exception(HttpServletRequest req, Exception e) {
+//        log.error("---BaseException Handler---Host:{} invokes url:{} ERROR:{} cause:{}",
+//                req.getRemoteHost(), req.getRequestURL(), e.getMessage(), e.getCause());
+//        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
 }

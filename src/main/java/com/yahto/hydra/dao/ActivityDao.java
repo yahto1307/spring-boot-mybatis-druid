@@ -1,6 +1,7 @@
 package com.yahto.hydra.dao;
 
 import com.yahto.hydra.model.Activity;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**

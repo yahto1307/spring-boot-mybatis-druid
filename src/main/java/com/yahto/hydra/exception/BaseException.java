@@ -1,6 +1,6 @@
 package com.yahto.hydra.exception;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 /**
  * Created by yahto on 2019-06-06 13:58
@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 public abstract class BaseException extends RuntimeException {
     Integer status;
     String msg;
-    DateTime timestamp;
+    Date timestamp;
 
     public BaseException(String msg) {
         super(msg);
@@ -18,21 +18,21 @@ public abstract class BaseException extends RuntimeException {
     }
 
 
-    public BaseException(Integer status, String msg, DateTime timestamp) {
+    public BaseException(Integer status, String msg, Date timestamp) {
         super(msg);
         this.status = status;
         this.msg = msg;
         this.timestamp = timestamp;
     }
 
-    public BaseException(Throwable cause, Integer status, String msg, DateTime timestamp) {
+    public BaseException(Throwable cause, Integer status, String msg, Date timestamp) {
         super(msg, cause);
         this.status = status;
         this.msg = msg;
         this.timestamp = timestamp;
     }
 
-    public BaseException(Throwable cause, boolean enableSuppression, boolean writableStackTrace, Integer status, String msg, DateTime timestamp) {
+    public BaseException(Throwable cause, boolean enableSuppression, boolean writableStackTrace, Integer status, String msg, Date timestamp) {
         super(msg, cause, enableSuppression, writableStackTrace);
         this.status = status;
         this.msg = msg;
@@ -47,7 +47,7 @@ public abstract class BaseException extends RuntimeException {
         return msg;
     }
 
-    public DateTime getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 }
