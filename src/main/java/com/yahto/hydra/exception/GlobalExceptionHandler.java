@@ -23,19 +23,23 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = BaseException.class)
     public ResponseEntity<Result> baseExceptionHandler(HttpServletRequest req, Exception e) {
         log.error("---BaseException Handler---Host:{} invokes url:{} ERROR:{} cause:{}",
-                req.getRemoteHost(), req.getRequestURL(), e.getMessage(), e.getCause());
-        Result result = new Result().fail("internal error");
-        if (e instanceof DataBaseException) {
-            result.fail(((DataBaseException) e).getMsg());
+                req.getRemoteHost(), req.getRequestURL(), e.getMessage(), e);
+        Result result = new Result().fail(e.getMessage());
+        if (e instanceof BaseException) {
+            return ResponseEntity
+                    .status(((BaseException) e).getStatus())
+                    .body(result);
         }
         return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-//    @ExceptionHandler(value = Throwable.class)
-//    public ResponseEntity<Result> exception(HttpServletRequest req, Exception e) {
-//        log.error("---BaseException Handler---Host:{} invokes url:{} ERROR:{} cause:{}",
-//                req.getRemoteHost(), req.getRequestURL(), e.getMessage(), e.getCause());
-//        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @ExceptionHandler(value = Throwable.class)
+    public ResponseEntity<Result> exception(HttpServletRequest req, Exception e) {
+        log.error("---Server Exception Handler---Host:{} invokes url:{} ERROR:{} cause:{}",
+                req.getRemoteHost(), req.getRequestURL(), e.getMessage(), e);
+        log.error("Exception", e);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new Result().fail("internal server error"));
+    }
 
 }

@@ -27,10 +27,8 @@ public class MybatisConfig {
     public SqlSessionFactory sqlSessionFactory(@Qualifier("druidDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("mybatis-config.xml"));
         sqlSessionFactoryBean.setTypeAliasesPackage("com.yahto.hydra.model");
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("mapper/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 }
