@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.Date;
 
 /**
- * Created by yahto on 2019-05-27 17:01
+ * Created by yahto on 2019-06-11 17:18
  *
  * @author yahto
  */
@@ -16,14 +16,19 @@ import java.util.Date;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class Activity {
+public class KillItem {
     @JSONField(name = "id")
     private Long id;
+    @JSONField(name = "activity_id")
+    private Long activityId;
     @JSONField(name = "name")
     private String name;
-    @JSONField(name = "create_at", format = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(name = "total_count")
+    private Long totalCount;
+    @JSONField(name = "left_count")
+    private Long leftCount;
+    @JSONField(name = "create_at")
     private Date createAt;
-    @JSONField(name = "update_at", format = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(name = "update_at")
     private Date updateAt;
-
 }

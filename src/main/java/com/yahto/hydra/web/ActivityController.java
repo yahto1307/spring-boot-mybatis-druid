@@ -2,9 +2,8 @@ package com.yahto.hydra.web;
 
 import com.yahto.hydra.dao.ActivityDao;
 import com.yahto.hydra.dao.condition.ActivityQueryCondition;
-import com.yahto.hydra.exception.BaseException;
-import com.yahto.hydra.exception.ExceptionEnum;
 import com.yahto.hydra.model.Activity;
+import com.yahto.hydra.model.KillItemWithActivity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +37,11 @@ public class ActivityController {
     @GetMapping("/query")
     public List<Activity> query() {
         ActivityQueryCondition condition = new ActivityQueryCondition();
-        throw BaseException.builder().exceptionEnum(ExceptionEnum.DATABASE_EXCEPTION).build();
-//        return activityDao.queryByCondition(condition);
+        return activityDao.queryByCondition(condition);
+    }
+
+    @GetMapping("/queryAll")
+    public List<KillItemWithActivity> queryAll() {
+        return activityDao.queryAll(1L);
     }
 }

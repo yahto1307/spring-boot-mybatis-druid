@@ -3,12 +3,10 @@ package com.yahto.hydra.config;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -18,7 +16,7 @@ import javax.sql.DataSource;
  *
  * @author yahto
  */
-@MapperScan(basePackages = "com.yahto.hydra.dao",sqlSessionFactoryRef = "sqlSessionFactory")
+@MapperScan(basePackages = "com.yahto.hydra.dao", sqlSessionFactoryRef = "sqlSessionFactory")
 @Configuration
 @EnableTransactionManagement
 public class MybatisConfig {

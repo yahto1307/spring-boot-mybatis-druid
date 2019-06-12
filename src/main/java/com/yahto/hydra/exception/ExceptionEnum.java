@@ -7,8 +7,8 @@ package com.yahto.hydra.exception;
  */
 public enum ExceptionEnum {
     //**httpCode=500 exceptions
-    DATABASE_EXCEPTION(5001, 500, "database exception");
-
+    DATABASE_EXCEPTION(5001, 500, "database exception"),
+    PARAM_NULL_EXCEPTION(4001, 400, "param can not be null");
     private Integer serviceExceptionCode;
     private Integer httpCode;
     private String message;

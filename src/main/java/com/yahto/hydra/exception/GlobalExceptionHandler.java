@@ -22,8 +22,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = BaseException.class)
     public ResponseEntity<Result> baseExceptionHandler(HttpServletRequest req, Exception e) {
-        log.error("---BaseException Handler---Host:{} invokes url:{} ERROR:{} cause:{}",
-                req.getRemoteHost(), req.getRequestURL(), e.getMessage(), e);
+        log.error("---Handled Exception--- invokes url:{}", req.getRequestURL().toString(), e);
         Result result = new Result().fail(e.getMessage());
         if (e instanceof BaseException) {
             return ResponseEntity
@@ -35,9 +34,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Throwable.class)
     public ResponseEntity<Result> exception(HttpServletRequest req, Exception e) {
-        log.error("---Server Exception Handler---Host:{} invokes url:{} ERROR:{} cause:{}",
-                req.getRemoteHost(), req.getRequestURL(), e.getMessage(), e);
-        log.error("Exception", e);
+        log.error("---Unhandled Exception--- invokes url:{}", req.getRequestURL().toString(), e);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new Result().fail("internal server error"));
     }

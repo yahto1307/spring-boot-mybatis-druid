@@ -1,5 +1,7 @@
 package com.yahto.hydra.config;
 
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +16,6 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -62,22 +63,21 @@ public class RedisConfig {
     private int connectionTimeout;
 
 
-    @Bean
+    @Bean(name = "redisTemplate")
     @Primary
-    public RedisTemplate<String, Object> redisTemplate(@Qualifier("redisConnectionFactory") RedisConnectionFactory redisConnectionFactory) {
-        //配置redisTemplate
+    public RedisTemplate<String, Object> redisTemplate(@Qualifier("redisConnectionFactory") RedisConnectionFactory redisConnectionFactory,
+                                                       @Qualifier("fastJsonConfig") FastJsonConfig fastJsonConfig) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        // 配置连接工厂
         redisTemplate.setConnectionFactory(redisConnectionFactory);
-        RedisSerializer stringSerializer = new StringRedisSerializer();
-        //key序列化
+        FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer(Object.class);
+        StringRedisSerializer stringSerializer = new StringRedisSerializer();
+        fastJsonRedisSerializer.setFastJsonConfig(fastJsonConfig);
+        //key use stringSerializer
         redisTemplate.setKeySerializer(stringSerializer);
-        //value序列化
-        redisTemplate.setValueSerializer(stringSerializer);
-        //Hash key序列化
         redisTemplate.setHashKeySerializer(stringSerializer);
-        //Hash value序列化
-        redisTemplate.setHashValueSerializer(stringSerializer);
+        //value use fastJsonSerializer
+        redisTemplate.setValueSerializer(fastJsonRedisSerializer);
+        redisTemplate.setHashValueSerializer(fastJsonRedisSerializer);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
