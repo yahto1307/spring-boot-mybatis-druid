@@ -13,7 +13,7 @@ import org.apache.ibatis.jdbc.SQL;
  */
 public class ActivitySqlProvider {
 
-    public String insertSelective(Activity activity) {
+    public String insertEntity(Activity activity) {
         return new SQL() {{
             INSERT_INTO("tb_activity");
             if (!Strings.isNullOrEmpty(activity.getName())) {

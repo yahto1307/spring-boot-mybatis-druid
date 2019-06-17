@@ -7,6 +7,7 @@ import com.yahto.hydra.model.KillItemWithActivity;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
+import tk.mybatis.mapper.common.ConditionMapper;
 
 import java.util.List;
 
@@ -15,20 +16,17 @@ import java.util.List;
  *
  * @author yahto
  */
-@Mapper
 @Repository
-public interface ActivityDao {
-
-
+public interface ActivityDao extends tk.mybatis.mapper.common.Mapper<Activity> , ConditionMapper<Activity> {
     /**
      * insert activity model
      *
      * @param activity model
      * @return entity
      */
-    @InsertProvider(type = ActivitySqlProvider.class, method = "insertSelective")
+    @InsertProvider(type = ActivitySqlProvider.class, method = "insertEntity")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    int insertSelective(Activity activity);
+    int insertEntity(Activity activity);
 
 
     /**

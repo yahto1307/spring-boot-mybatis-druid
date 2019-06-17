@@ -3,6 +3,8 @@ package com.yahto.hydra.model;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
 
+import javax.persistence.Column;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -16,14 +18,21 @@ import java.util.Date;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "tb_activity")
 public class Activity {
     @JSONField(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
-    @JSONField(name = "name")
-    private String name;
-    @JSONField(name = "create_at", format = "yyyy-MM-dd HH:mm:ss")
-    private Date createAt;
-    @JSONField(name = "update_at", format = "yyyy-MM-dd HH:mm:ss")
-    private Date updateAt;
 
+    @JSONField(name = "name")
+    @Column(name = "name")
+    private String name;
+
+    @JSONField(name = "create_at", format = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "create_at")
+    private Date createAt;
+
+    @JSONField(name = "update_at", format = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "update_at")
+    private Date updateAt;
 }

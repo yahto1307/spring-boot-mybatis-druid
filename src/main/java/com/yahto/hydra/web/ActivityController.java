@@ -1,13 +1,14 @@
 package com.yahto.hydra.web;
 
+import com.google.common.collect.Lists;
 import com.yahto.hydra.dao.ActivityDao;
-import com.yahto.hydra.dao.condition.ActivityQueryCondition;
 import com.yahto.hydra.model.Activity;
 import com.yahto.hydra.model.KillItemWithActivity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.entity.Condition;
 
 import java.util.Date;
 import java.util.List;
@@ -36,8 +37,12 @@ public class ActivityController {
 
     @GetMapping("/query")
     public List<Activity> query() {
-        ActivityQueryCondition condition = new ActivityQueryCondition();
-        return activityDao.queryByCondition(condition);
+        Condition activityCondition = new Condition(Activity.class);
+        activityCondition.createCriteria();
+        List<Long> excludeIds = Lists.newArrayList();
+        excludeIds.add(1L);
+        activityCondition.createCriteria().andNotIn("id", excludeIds);
+        return activityDao.selectByCondition(activityCondition);
     }
 
     @GetMapping("/queryAll")

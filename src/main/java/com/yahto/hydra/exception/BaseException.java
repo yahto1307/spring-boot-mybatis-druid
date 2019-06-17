@@ -46,7 +46,7 @@ public class BaseException extends RuntimeException {
         private Boolean enableSuppression;
         private Boolean writableStackTrace;
 
-        public BaseExceptionBuilder() {
+        BaseExceptionBuilder() {
         }
 
         public BaseExceptionBuilder exceptionEnum(final ExceptionEnum exceptionEnum) {
