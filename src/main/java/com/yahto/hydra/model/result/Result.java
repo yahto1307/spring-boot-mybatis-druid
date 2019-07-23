@@ -11,34 +11,28 @@ import java.util.Map;
  *
  * @author yahto
  */
-public class Result {
+public class Result<T> {
     private Meta meta;
-    private Map<String, Object> data = Maps.newHashMap();
+    private Map<String, T> data = Maps.newHashMap();
 
     public Result success() {
         this.meta = new Meta(true, "success");
         return this;
     }
 
-    public Result success(Map<String, Object> data) {
+    public Result<T> success(Map<String, T> data) {
         this.meta = new Meta(true, "success");
         this.data.putAll(data);
         return this;
     }
 
-    public Result add(String key, Object data) {
+    public Result<T> add(String key, T data) {
         this.data.put(key, data);
         return this;
     }
 
     public Result fail(String msg) {
         this.meta = new Meta(false, msg);
-        return this;
-    }
-
-    public Result exception(String msg, Throwable ex) {
-        this.meta = new Meta(false, msg);
-        this.data.put("cause", ex.getLocalizedMessage());
         return this;
     }
 

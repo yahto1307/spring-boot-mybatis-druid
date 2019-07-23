@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import tk.mybatis.mapper.autoconfigure.MapperAutoConfiguration;
 
 /**
@@ -22,6 +23,7 @@ import tk.mybatis.mapper.autoconfigure.MapperAutoConfiguration;
         MapperAutoConfiguration.class
 })
 @EnableWebMvc
+@EnableSwagger2
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

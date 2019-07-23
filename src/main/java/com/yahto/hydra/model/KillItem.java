@@ -3,6 +3,7 @@ package com.yahto.hydra.model;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
 
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -16,6 +17,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "tb_kill_item")
 public class KillItem {
     @JSONField(name = "id")
     private Long id;

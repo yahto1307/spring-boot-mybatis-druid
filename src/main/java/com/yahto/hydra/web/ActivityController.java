@@ -3,7 +3,7 @@ package com.yahto.hydra.web;
 import com.google.common.collect.Lists;
 import com.yahto.hydra.dao.ActivityDao;
 import com.yahto.hydra.model.Activity;
-import com.yahto.hydra.model.KillItemWithActivity;
+import com.yahto.hydra.model.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,28 +25,25 @@ public class ActivityController {
     private ActivityDao activityDao;
 
     @GetMapping("/create")
-    public Activity create() {
+    public Result create() {
         Activity activity = Activity.builder()
                 .createAt(new Date())
                 .updateAt(new Date())
                 .name("hail hydra")
                 .build();
         activityDao.insertSelective(activity);
-        return activity;
+        return new Result().success().add("activity", activity);
     }
 
     @GetMapping("/query")
-    public List<Activity> query() {
+    public Result query() {
         Condition activityCondition = new Condition(Activity.class);
         activityCondition.createCriteria();
         List<Long> excludeIds = Lists.newArrayList();
         excludeIds.add(1L);
         activityCondition.createCriteria().andNotIn("id", excludeIds);
-        return activityDao.selectByCondition(activityCondition);
+        return new Result().success().add("activity_list",
+                activityDao.selectByCondition(activityCondition));
     }
 
-    @GetMapping("/queryAll")
-    public List<KillItemWithActivity> queryAll() {
-        return activityDao.queryAll(1L);
-    }
 }
