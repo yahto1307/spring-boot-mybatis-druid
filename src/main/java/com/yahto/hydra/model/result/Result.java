@@ -1,47 +1,38 @@
 package com.yahto.hydra.model.result;
 
-import com.google.common.collect.Maps;
+import lombok.*;
 import org.joda.time.DateTime;
 
 import java.util.Date;
-import java.util.Map;
 
 /**
  * Created by yahto on 2019-06-06 14:18
  *
  * @author yahto
  */
+@Data
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class Result<T> {
     private Meta meta;
-    private Map<String, T> data = Maps.newHashMap();
+    private T data;
 
-    public Result success() {
+    public Result<T> success() {
         this.meta = new Meta(true, "success");
         return this;
     }
 
-    public Result<T> success(Map<String, T> data) {
+    public Result<T> success(T data) {
         this.meta = new Meta(true, "success");
-        this.data.putAll(data);
+        this.data = data;
         return this;
     }
 
-    public Result<T> add(String key, T data) {
-        this.data.put(key, data);
-        return this;
-    }
-
-    public Result fail(String msg) {
+    public Result<T> fail(String msg) {
         this.meta = new Meta(false, msg);
         return this;
-    }
-
-    public Meta getMeta() {
-        return meta;
-    }
-
-    public Object getData() {
-        return data;
     }
 
     public class Meta {
