@@ -35,7 +35,7 @@ public class Result<T> {
         return this;
     }
 
-    public class Meta {
+    public static class Meta {
 
         private boolean success;
         private String message;
